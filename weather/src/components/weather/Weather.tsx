@@ -10,6 +10,12 @@ type weather = {
     windSpeed: number;
     humidity: number;
     clouds: number;
+    feelsLike: number;
+    visibility: number;
+    sunrise: number;
+    sunset: number;
+    windDeg: number;
+    windGust: number;
 }
 
 const Weather:React.FC = () => {
@@ -38,7 +44,13 @@ const Weather:React.FC = () => {
                     description: data.weather[0].description,
                     windSpeed: Number(data.wind.speed.toFixed(2)),
                     humidity: data.main.humidity,
-                    clouds: data.clouds.all
+                    clouds: data.clouds.all,
+                    feelsLike: Math.round(data.main.feels_like),
+                    visibility: data.visibility / 1000,
+                    sunrise: data.sys.sunrise * 1000,
+                    sunset: data.sys.sunset * 1000,
+                    windDeg: data.wind.deg,
+                    windGust: data.wind.gust || 0
                 });
                
                 setLoading(false);
@@ -60,7 +72,7 @@ const Weather:React.FC = () => {
                 />
                 <button onClick={fetchWeather}>Узнать погоду</button>
                 
-                {loading && <p>Загрузка...</p>}
+                {loading && <p>Загружаем...</p>}
                 {error && <p>{error}</p>}
                 
                 {weatherData && (
@@ -77,7 +89,13 @@ const Weather:React.FC = () => {
                             {[
                                 { label: 'Скорость ветра', value: `${weatherData.windSpeed} м/с` },
                                 { label: 'Влажность', value: `${weatherData.humidity}%` },
-                                { label: 'Облачность', value: `${weatherData.clouds}%` }
+                                { label: 'Облачность', value: `${weatherData.clouds}%` },
+                                { label: 'Ощущается как', value: `${weatherData.feelsLike}°C` },
+                                { label: 'Порывы до', value: `${weatherData.windGust} м/с` },
+                                { label: 'Направление ветра', value: `${getWindDirection(weatherData.windDeg)}` },
+                                { label: 'Видимость', value: `${weatherData.visibility} км` },
+                                { label: 'Восход', value: formatTime(weatherData.sunrise) },
+                                { label: 'Закат', value: formatTime(weatherData.sunset) }
                             ].map(({ label, value }) => (
                                 <div key={label} className="detail-item">
                                     <p>{label}</p>
@@ -89,8 +107,19 @@ const Weather:React.FC = () => {
                 )}
             </div>
         );
+
 }
 
+const getWindDirection = (deg: number): string => {
+    const directions = ['С', 'СВ', 'В', 'ЮВ', 'Ю', 'ЮЗ', 'З', 'СЗ'];
+    return directions[Math.round(deg / 45) % 8];
+};
 
+const formatTime = (timestamp: number): string => {
+    return new Date(timestamp).toLocaleTimeString('ru-RU', {
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+};
 
 export default Weather;
