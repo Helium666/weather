@@ -1,120 +1,188 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: #1e1e1e;
+}
+
 .weather-container {
-    max-width: 400px;
-    margin: 20px auto;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.3);
-    background-color: #1e1e1e;
-    font-family: Arial, sans-serif;
-    color: #fff;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    transition: background 0.3s ease;
 }
 
 h1 {
-    text-align: center;
-    color: #fff;
-    margin-bottom: 20px;
-    font-size: 2.5em;
+    color: white;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+}
+
+.buttons-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+button {
+    flex: 1;
+    width: auto;
+    min-width: 120px;
+    padding: 0.8rem;
+    background: rgba(0, 149, 255, 0.8);
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+button:hover {
+    background: rgba(0, 149, 255, 1);
 }
 
 input {
     width: 100%;
-    padding: 12px;
-    margin-bottom: 10px;
-    border-radius: 5px;
+    padding: 0.8rem;
     border: none;
-    background-color: #333;
-    color: #fff;
-    font-size: 16px;
-    box-sizing: border-box;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 1rem;
+    margin-bottom: 1rem;
 }
 
 input::placeholder {
-    color: #fff;
-    opacity: 0.7;
-}
-
-button {
-    width: 100%;
-    padding: 12px;
-    background-color: #0095ff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-bottom: 15px;
-}
-
-button:hover {
-    background-color: #0077cc;
+    color: rgba(255, 255, 255, 0.5);
 }
 
 .weather-info {
-    background-color: #333;
-    border-radius: 8px;
-    padding: 20px;
+    margin-top: 1rem;
     text-align: center;
+    color: white;
 }
 
 .weather-info h2 {
-    font-size: 2em;
-    margin-bottom: 15px;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
 }
 
-.weather-info img {
-    width: 100px;
-    height: 100px;
-    margin: 10px 0;
+.temperature {
+    font-size: 3rem;
+    margin: 0.5rem 0;
 }
 
-.weather-info p {
-    margin: 10px 0;
-}
-
-.weather-info p:nth-child(3) { /* Температура */
-    font-size: 32px;
-    font-weight: bold;
-}
-
-.weather-info p:nth-child(4) { /* Описание */
-    color: #ccc;
-    font-size: 18px;
-    margin-bottom: 20px;
+.description {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
 }
 
 .weather-details {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
-    flex-wrap: wrap;
-    gap: 15px;
-    grid-template-columns: repeat(2, 1fr);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8rem;
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 1rem;
 }
 
 .detail-item {
-    text-align: center;
-    flex: 1;
-    min-width: 100px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    border-radius: 12px;
+    backdrop-filter: blur(4px);
 }
 
 .detail-item p:first-child {
-    color: #999;
-    font-size: 14px;
-    margin-bottom: 5px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.8rem;
+    margin-bottom: 0.3rem;
 }
 
 .detail-item p:last-child {
-    font-size: 16px;
+    font-size: 1.2rem;
     font-weight: bold;
+    margin: 0;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 1200px) {
+    .body{
+        overflow: auto
+    }
+    .weather-details {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.6rem;
+    }
     .weather-container {
-        margin: 10px;
-        padding: 15px;
+        padding: 1rem;
+        height: auto;
+        overflow: auto
+    }
+}
+
+/* Медиа-запрос для вашего телефона */
+@media (max-width: 720px) {
+    .weather-container {
+        padding: 1rem; /* Уменьшаем отступы */
+        height: auto; /* Позволяем контейнеру адаптироваться по высоте */
+        overflow-y: auto;
+    }
+    body{
+        overflow-y: auto;
+    }
+    .input-container {
+        width: 100%; /* Увеличиваем ширину инпута */
+    }
+
+    input {
+        width: 100%; /* Увеличиваем ширину инпута */
+        margin-bottom: 1rem; /* Увеличиваем отступ снизу */
+    }
+
+    .buttons-group {
+        flex-direction: column; /* Кнопки в столбик */
+        gap: 10px; /* Отступ между кнопками */
+    }
+
+    button {
+        width: 100%; /* Кнопки занимают всю ширину */
+    }
+
+    .weather-info {
+        margin-top: 1rem; /* Увеличиваем отступ сверху */
     }
 
     .weather-details {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr); /* Две колонки для деталей */
+    }
+
+    .detail-item {
+        padding: 0.5rem; /* Уменьшаем отступы в деталях */
+    }
+
+    .temperature {
+        font-size: 2rem; /* Уменьшаем размер температуры */
+    }
+
+    .description {
+        font-size: 0.9rem; /* Уменьшаем размер описания */
+    }
+}
+
+@media (min-width: 721px) {
+    body{
+        overflow-y: hidden; /* Отключаем прокрутку на ПК */
     }
 }
